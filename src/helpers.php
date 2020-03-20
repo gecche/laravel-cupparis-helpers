@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 
 
@@ -100,10 +102,10 @@ if (!function_exists('array_key_remove')) {
         $new_array = array();
         foreach (array_keys($array) as $key) {
                         
-            if ($append && !ends_with($key, $prefix)) {
+            if ($append && !Str::endsWith($key, $prefix)) {
                 $new_array[$key] = $array[$key];
             }
-            if (!$append && !starts_with($key, $prefix)) {
+            if (!$append && !Str::startsWith($key, $prefix)) {
                 $new_array[$key] = $array[$key];
             }
         }
@@ -117,7 +119,7 @@ if (!function_exists('array_undot')) {
     {
         $array = [];
         foreach ($dotNotationArray as $key => $value) {
-            array_set($array, $key, $value);
+            Arr::get($array, $key, $value);
         }
         return $array;
     }
@@ -162,7 +164,7 @@ if (!function_exists('searchform_trim_keys')) {
     function searchform_trim_keys($pattern, $input) {
         $new_array = array();
         foreach ($input as $key => $value) {
-            if (starts_with($key,$pattern)) {
+            if (Str::startsWith($key,$pattern)) {
                 $key2 = substr($key,strlen($pattern));
                 $new_array[$key2] = $value;
             }
@@ -230,7 +232,7 @@ if (!function_exists('cupparis_json_encode')) {
 if (!function_exists('get_icona')) {
 
     function get_icona($mimetype) {
-        $icona = array_get(Config::get('app.mimes_icone'),$mimetype,false);
+        $icona = Arr::get(Config::get('app.mimes_icone'),$mimetype,false);
         if ($icona)
             return $icona;
         else
@@ -271,6 +273,28 @@ if (!function_exists('substr_text_only')) {
     function substr_text_only($string, $limit, $end = '...')
     {
         $notags = strip_tags($string);
-        return str_limit($notags,$limit,$end);
+        return Str::limit($notags,$limit,$end);
     }
+}
+
+
+
+if (!function_exists('storage_temp_path')) {
+
+    /**
+     * Get the path to the storage folder of the domain.
+     *
+     * @param   string  $path
+     * @return  string
+     */
+    function storage_temp_path($path = '') {
+        $id = Auth::id();
+        if (!$id) {
+            $id = 0;
+        }
+
+        return app('path.storage') . DIRECTORY_SEPARATOR . "files" .
+            DIRECTORY_SEPARATOR . "temp/user_" . $id . ($path ? '/' . $path : $path);
+    }
+
 }
