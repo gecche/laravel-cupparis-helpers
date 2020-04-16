@@ -73,7 +73,7 @@ if (!function_exists('array_key_append')) {
      * @param  array $array
      * @param  string $prefix
      * @param  boolean $append (append or prepend the prefix)
-     * @return string
+     * @return array
      */
     function array_key_append($array, $prefix, $append = true) {
         $new_keys = array();
