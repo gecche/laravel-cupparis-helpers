@@ -57,9 +57,9 @@ if (!function_exists('trans_choice_uc')) {
      * @param  array   $parameters
      * @return string
      */
-    function trans_choice_uc($id, $number, array $parameters = array(), $domain = 'messages', $locale = null)
+    function trans_choice_uc($id, $number, array $replace = [], $locale = null)
     {
-        return ucfirst(trans_choice($id, $number, $parameters, $domain, $locale));
+        return ucfirst(trans_choice($id, $number, $replace, $locale));
     }
 
 }
