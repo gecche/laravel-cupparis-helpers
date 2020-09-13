@@ -33,21 +33,6 @@ if (!function_exists('get_version')) {
  * and open the template in the editor.
  */
 
-if (!function_exists('trans_uc')) {
-
-    /**
-     * Translate with ucfirst
-     *
-     * @param  string  $name
-     * @param  array   $parameters
-     * @return string
-     */
-    function trans_uc($id = null, $parameters = array(), $domain = 'messages', $locale = null) {
-        return ucfirst(trans($id, $parameters, $domain, $locale));
-    }
-
-}
-
 if (!function_exists('trans_choice_uc')) {
 
     /**
@@ -57,9 +42,9 @@ if (!function_exists('trans_choice_uc')) {
      * @param  array   $parameters
      * @return string
      */
-    function trans_choice_uc($id, $number, array $replace = [], $locale = null)
+    function trans_choice_uc($key, $number, array $replace = [], $locale = null)
     {
-        return ucfirst(trans_choice($id, $number, $replace, $locale));
+        return ucfirst(trans_choice($key, $number, $replace, $locale));
     }
 
 }
