@@ -33,6 +33,21 @@ if (!function_exists('get_version')) {
  * and open the template in the editor.
  */
 
+if (!function_exists('trans_uc')) {
+
+    /**
+     * Translate with ucfirst
+     *
+     * @param  string  $name
+     * @param  array   $parameters
+     * @return string
+     */
+    function trans_uc($id = null, $parameters = array(), $domain = 'messages', $locale = null) {
+        return ucfirst(trans($id, $parameters, $domain, $locale));
+    }
+
+}
+
 if (!function_exists('trans_choice_uc')) {
 
     /**
@@ -42,9 +57,9 @@ if (!function_exists('trans_choice_uc')) {
      * @param  array   $parameters
      * @return string
      */
-    function trans_choice_uc($key, $number, array $replace = [], $locale = null)
+    function trans_choice_uc($id, $number, array $replace = [], $locale = null)
     {
-        return ucfirst(trans_choice($key, $number, $replace, $locale));
+        return ucfirst(trans_choice($id, $number, $replace, $locale));
     }
 
 }
@@ -86,7 +101,7 @@ if (!function_exists('array_key_remove')) {
     function array_key_remove($array, $prefix, $append = true) {
         $new_array = array();
         foreach (array_keys($array) as $key) {
-                        
+
             if ($append && !Str::endsWith($key, $prefix)) {
                 $new_array[$key] = $array[$key];
             }
@@ -184,9 +199,9 @@ if (!function_exists('associative_from_input')) {
                 $result[] = $second_tokens;
                 continue;
             }
-            $result[$second_tokens[0]] = $second_tokens[1];            
+            $result[$second_tokens[0]] = $second_tokens[1];
         }
-        
+
         return $result;
     }
 
@@ -229,13 +244,13 @@ if (!function_exists('get_icona')) {
 if (!function_exists('multi_rand')) {
 
     function multi_rand($nRandoms = 1,$min = 0,$max = 100) {
-        
+
         $array = range($min, $max);
         $result = array();
- 
+
         //Initialize the random generator
         srand ((double)microtime()*1000000);
- 
+
         //A for-loop which selects every run a different random number
         for($x = 0; $x < $nRandoms; $x++)
         {
@@ -248,8 +263,8 @@ if (!function_exists('multi_rand')) {
              //The chosen number will be removed from the array
              //so it can't be taken another time
              array_splice($array, $i, 1);
-        }        
-        
+        }
+
         return $result;
     }
 
@@ -280,6 +295,39 @@ if (!function_exists('storage_temp_path')) {
 
         return app('path.storage') . DIRECTORY_SEPARATOR . "files" .
             DIRECTORY_SEPARATOR . "temp/user_" . $id . ($path ? '/' . $path : $path);
+    }
+
+}
+
+if (!function_exists('auth_role_name')) {
+
+    /**
+     * Get the path to the storage folder of the domain.
+     *
+     * @param   string  $path
+     * @return  string
+     */
+    function auth_role($onlyname = true) {
+        $user = Auth::user();
+        if (!$user) {
+            return null;
+        }
+        return $onlyname ? $user->getRolename() : $user->mainrole;
+    }
+
+}
+
+if (!function_exists('auth_is_admin')) {
+
+    /**
+     * Get the path to the storage folder of the domain.
+     *
+     * @param   string  $path
+     * @return  string
+     */
+    function auth_is_admin() {
+        $role = auth_role();
+        return ($role && in_array($role,config('permission.admin_roles',[])));
     }
 
 }
