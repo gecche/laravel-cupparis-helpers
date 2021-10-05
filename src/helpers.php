@@ -299,7 +299,7 @@ if (!function_exists('storage_temp_path')) {
 
 }
 
-if (!function_exists('auth_role_name')) {
+if (!function_exists('auth_role')) {
 
     /**
      * Get the path to the storage folder of the domain.
