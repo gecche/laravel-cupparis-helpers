@@ -1,0 +1,23 @@
+{
+    "name": "gecche/laravel-cupparis-helpers",
+    "description": "Alcuni helpers di utilità generale",
+    "keywords": ["laravel", "helpers"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Giacomo Terreni",
+            "email": "giacomo.terreni@gmail.com"
+        }
+    ],
+    "require": {
+        "laravel/framework": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    }
+}
