@@ -76,7 +76,7 @@ if (!function_exists('array_key_append')) {
      * @return array
      */
     function array_key_append($array, $prefix, $append = true) {
-        $new_keys = array();
+        $new_keys = [];
         foreach (array_keys($array) as $key) {
             if ($append)
                 $new_keys[] = $key . $prefix;
@@ -96,10 +96,10 @@ if (!function_exists('array_key_remove')) {
      * @param  array $array
      * @param  string $prefix
      * @param  boolean $append (append or prepend the prefix)
-     * @return string
+     * @return array
      */
     function array_key_remove($array, $prefix, $append = true) {
-        $new_array = array();
+        $new_array = [];
         foreach (array_keys($array) as $key) {
 
             if ($append && !Str::endsWith($key, $prefix)) {
@@ -136,7 +136,7 @@ if (!function_exists('preg_grep_keys')) {
 if (!function_exists('trim_keys')) {
 
     function trim_keys($pattern, $input) {
-        $new_array = array();
+        $new_array = [];
         foreach ($input as $key => $value) {
             $key2 = str_replace($pattern, '', $key);
             $new_array[$key2] = $value;
@@ -149,7 +149,7 @@ if (!function_exists('trim_keys')) {
 if (!function_exists('ltrim_keys')) {
 
     function ltrim_keys($pattern, $input) {
-        $new_array = array();
+        $new_array = [];
         foreach ($input as $key => $value) {
             $key2 = ltrim($key,$pattern);
             $new_array[$key2] = $value;
@@ -162,7 +162,7 @@ if (!function_exists('ltrim_keys')) {
 if (!function_exists('searchform_trim_keys')) {
 
     function searchform_trim_keys($pattern, $input) {
-        $new_array = array();
+        $new_array = [];
         foreach ($input as $key => $value) {
             if (Str::startsWith($key,$pattern)) {
                 $key2 = substr($key,strlen($pattern));
@@ -191,7 +191,7 @@ if (!function_exists('associative_from_input')) {
         if (!$input || !is_string($input)) {
             return array();
         }
-        $result = array();
+        $result = [];
         $first_tokens = explode($first_separator, $input);
         foreach ($first_tokens as $token) {
             $second_tokens = explode($second_separator, $token);
@@ -246,7 +246,7 @@ if (!function_exists('multi_rand')) {
     function multi_rand($nRandoms = 1,$min = 0,$max = 100) {
 
         $array = range($min, $max);
-        $result = array();
+        $result = [];
 
         //Initialize the random generator
         srand ((double)microtime()*1000000);
@@ -304,7 +304,7 @@ if (!function_exists('auth_role')) {
     /**
      * Get the path to the storage folder of the domain.
      *
-     * @param   string  $path
+     * @param   string  $onlyname
      * @return  string
      */
     function auth_role($onlyname = true) {
@@ -317,12 +317,26 @@ if (!function_exists('auth_role')) {
 
 }
 
-if (!function_exists('auth_is_admin')) {
+if (!function_exists('auth_role_name')) {
 
     /**
      * Get the path to the storage folder of the domain.
      *
      * @param   string  $path
+     * @return  string
+     */
+    function auth_role_name() {
+
+        return auth_role();
+    }
+
+}
+
+if (!function_exists('auth_is_admin')) {
+
+    /**
+     * Get the path to the storage folder of the domain.
+     *
      * @return  string
      */
     function auth_is_admin() {
