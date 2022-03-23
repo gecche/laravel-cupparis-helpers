@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 
 
@@ -328,6 +329,35 @@ if (!function_exists('auth_is_admin')) {
     function auth_is_admin() {
         $role = auth_role();
         return ($role && in_array($role,config('permission.admin_roles',[])));
+    }
+
+}
+
+if (!function_exists('get_carbon_date')) {
+
+    /**
+     * Return the date in carbon format.
+     * If no date is provided or it is not valid, Carbon::now() is returned;
+     *
+     * @return  string
+     */
+    function get_carbon_date($date = null) {
+        if (is_object($date) && is_subclass_of($date,Carbon::class)) {
+            return $date;
+        }
+        if (is_string($date)) {
+            if (strlen($date == 10)) {
+                $format = 'Y-m-d';
+            }  else {
+                $format = 'Y-m-d H:i:s';
+            }
+            try {
+                return Carbon::createFromFormat($format,$date);
+            } catch (\Throwable $e) {
+                return Carbon::now();
+            }
+        }
+        return Carbon::now();
     }
 
 }
