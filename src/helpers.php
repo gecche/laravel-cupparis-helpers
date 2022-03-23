@@ -355,7 +355,7 @@ if (!function_exists('get_carbon_date')) {
      *
      * @return  string
      */
-    function get_carbon_date($date = null) {
+    function get_carbon_date($date = null,$exception = false,$exceptionMessage = "Data non valida") {
         if (is_object($date) && is_subclass_of($date,Carbon::class)) {
             return $date;
         }
@@ -368,8 +368,13 @@ if (!function_exists('get_carbon_date')) {
             try {
                 return Carbon::createFromFormat($format,$date);
             } catch (\Throwable $e) {
-                return Carbon::now();
+                $date = null;
             }
+        } else {
+            $date = null;
+        }
+        if (is_null($date) && $exception) {
+            throw new \Exception($exceptionMessage);
         }
         return Carbon::now();
     }
