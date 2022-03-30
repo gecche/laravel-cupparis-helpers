@@ -360,7 +360,7 @@ if (!function_exists('get_carbon_date')) {
             return $date;
         }
         if (is_string($date)) {
-            if (strlen($date == 10)) {
+            if (strlen($date) == 10) {
                 $format = 'Y-m-d';
             }  else {
                 $format = 'Y-m-d H:i:s';
