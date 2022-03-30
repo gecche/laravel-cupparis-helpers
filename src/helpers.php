@@ -356,7 +356,7 @@ if (!function_exists('get_carbon_date')) {
      * @return  string
      */
     function get_carbon_date($date = null,$exception = false,$exceptionMessage = "Data non valida") {
-        if (is_object($date) && is_subclass_of($date,Carbon::class)) {
+        if (is_object($date) && is_a($date,Carbon::class)) {
             return $date;
         }
         if (is_string($date)) {
