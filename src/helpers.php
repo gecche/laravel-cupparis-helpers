@@ -380,3 +380,39 @@ if (!function_exists('get_carbon_date')) {
     }
 
 }
+
+if (!function_exists('varexport')) {
+
+    /**
+     * Return the var_export result with short array syntax;
+     *
+     * @return  mixed
+     */
+    function varexport($expression)
+    {
+        $export = var_export($expression, TRUE);
+        $patterns = [
+            "/array \(/" => '[',
+            "/^([ ]*)\)(,?)$/m" => '$1]$2',
+            "/=>[ ]?\n[ ]+\[/" => '=> [',
+            "/([ ]*)(\'[^\']+\') => ([\[\'])/" => '$1$2 => $3',
+        ];
+        $export = preg_replace(array_keys($patterns), array_values($patterns), $export);
+        return $export;
+    }
+
+}
+
+if (!function_exists('cupparis_pretty_json_encode')) {
+
+    /**
+     * Return the var_export result with short array syntax;
+     *
+     * @return  mixed
+     */
+    function cupparis_pretty_json_encode($expression)
+    {
+        return json_encode($expression,JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    }
+
+}
